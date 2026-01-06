@@ -1,5 +1,5 @@
 import telebot
-from config import token
+from config import TOKEN as token
 from collections import defaultdict  # ✅ Задание 7
 from logic import quiz_questions
 
@@ -39,4 +39,12 @@ def callback_query(call):
 def start(message):
     send_question(message.chat.id)
 
-bot.infinity_polling()
+if __name__ == "__main__":
+    try:
+        bot.infinity_polling()
+    except telebot.apihelper.ApiTelegramException as e:
+        print(f"Telegram API error: {e}")
+        print("Make sure no other bot instance is running. Exiting.")
+    except Exception:
+        import traceback
+        traceback.print_exc()
